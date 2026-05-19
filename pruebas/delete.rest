@@ -1,0 +1,4 @@
+#borrar evento via ID (DELETE)
+
+DELETE http://localhost:5000/eventos/6
+Content-Type: application/json

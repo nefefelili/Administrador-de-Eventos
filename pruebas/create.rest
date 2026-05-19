@@ -1,0 +1,13 @@
+#crear nuevo evento (POST)
+
+POST http://localhost:5000/eventos
+Content-Type: application/json
+
+{
+    "nombre": "Tech Conference 2025",
+    "ubicacion": "San Juan Convention Center",
+    "fecha_hora": "2025-12-01 09:00",
+    "capacidad": 200,
+    "descripcion": "Annual technology conference for developers.",
+    "organizador_id": 7
+}

@@ -1,0 +1,12 @@
+{% extends "layout.html" %} {% block title %}Home{% endblock %} {% block content %}
+
+<div class="text-center">
+  <h1 class="mt-5">Welcome to the Event Manager</h1>
+  {% if current_user.is_authenticated %}
+  <p class="lead text-muted">Select the Dashboard option to view the events.</p>
+  {% else %}
+  <p class="lead text-body-secondary">Please log in or register to continue.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

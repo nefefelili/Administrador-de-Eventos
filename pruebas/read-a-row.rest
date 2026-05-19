@@ -1,0 +1,4 @@
+#leer un evento via ID (GET)
+
+GET http://localhost:5000/eventos/6
+Content-Type: application/json

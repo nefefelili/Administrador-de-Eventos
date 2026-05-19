@@ -1,0 +1,71 @@
+{% extends "layout.html" %} {% block title %}Dashboard{% endblock %} {% block content %}
+
+<div class="row">
+  <div class="col">
+    <h3>Event Management</h3>
+  </div>
+  <div class="col text-end">
+    {% if current_user.role.name != 'Participante' %}
+    <a class="btn btn-primary mb-3 me-2" href="{{ url_for('main.eventos') }}">
+      <i class="bi bi-plus"></i> New Event
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Date & Time</th>
+      <th>Capacity</th>
+      <th>Description</th>
+      <th>Organizer</th>
+      <th class="text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for evento in eventos %}
+    <tr>
+      <td>{{ evento.nombre }}</td>
+      <td>{{ evento.ubicacion }}</td>
+      <td>{{ evento.fecha_hora.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td>{{ evento.capacidad }}</td>
+      <td>{{ evento.descripcion }}</td>
+      <td>{{ evento.organizador.username }}</td>
+      <td class="text-center ps-0 pe-0">
+        {% if current_user.role.name == 'Admin' or evento.organizador_id == current_user.id %}
+        <a
+          class="btn btn-sm btn-warning"
+          href="{{ url_for('main.editar_evento', id=evento.id) }}"
+          title="Edit event"
+        >
+          <i class="bi bi-pencil"></i>
+        </a>
+        <form
+          method="POST"
+          action="{{ url_for('main.eliminar_evento', id=evento.id) }}"
+          style="display: inline"
+          onsubmit="return confirm('Are you sure you want to delete this event?');"
+        >
+          <button type="submit" class="btn btn-sm btn-danger" title="Delete event">
+            <i class="bi bi-trash"></i>
+          </button>
+        </form>
+        {% else %}
+        <span class="text-muted"><i class="bi bi-lock"></i></span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if current_user.role.name == 'Participante' %}
+<p class="text-center pe-3 mt-0 text-body-tertiary fw-lighter fst-italic">
+  You do not have permission to create, update or delete events.
+</p>
+{% endif %}
+
+{% endblock %}
